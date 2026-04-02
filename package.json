@@ -1,0 +1,35 @@
+{
+  "name": "sweetbook_api_pj",
+  "version": "1.0.0",
+  "description": "여행 가이드북 생성 서비스 - Book Print API 연동 웹앱",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "install:all": "npm install && cd client && npm install",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csr1968/sweetbook_api_pj.git"
+  },
+  "keywords": ["travel", "guidebook", "book-print-api"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/csr1968/sweetbook_api_pj/issues"
+  },
+  "homepage": "https://github.com/csr1968/sweetbook_api_pj#readme",
+  "dependencies": {
+    "bookprintapi-nodejs-sdk": "github:sweet-book/bookprintapi-nodejs-sdk",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "groq-sdk": "^1.1.2",
+    "multer": "^2.1.1",
+    "nodemon": "^3.1.14"
+  }
+}

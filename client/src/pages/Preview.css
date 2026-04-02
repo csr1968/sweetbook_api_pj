@@ -1,0 +1,151 @@
+.preview-page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.preview-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #333;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: #999;
+}
+
+/* 표지 */
+.book-cover {
+  background: linear-gradient(135deg, #e85d04 0%, #c94e00 100%);
+  color: #fff;
+  border-radius: 20px;
+  padding: 60px 48px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(232, 93, 4, 0.3);
+}
+
+.cover-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.cover-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.cover-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
+
+.cover-text {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.cover-meta {
+  font-size: 0.875rem;
+  opacity: 0.7;
+}
+
+/* 페이지 목록 */
+.pages-section h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.pages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.page-num {
+  font-size: 0.8rem;
+  color: #e85d04;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.page-content {
+  color: #444;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.page-type-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f5f0eb;
+  color: #888;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+}
+
+.preview-footer {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.preview-empty {
+  text-align: center;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #888;
+}

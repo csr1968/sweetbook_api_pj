@@ -1,0 +1,8 @@
+node_modules/
+.env
+uploads/
+*.log
+
+# React build
+client/build/
+client/node_modules/

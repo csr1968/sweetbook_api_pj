@@ -1,0 +1,119 @@
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.orders-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orders-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.order-id {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.order-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-pending { background: #fef3c7; color: #b45309; }
+.status-processing { background: #dbeafe; color: #1d4ed8; }
+.status-completed { background: #dcfce7; color: #15803d; }
+.status-cancelled { background: #fee2e2; color: #dc2626; }
+
+.order-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.order-date {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.orders-empty {
+  text-align: center;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #888;
+}
+
+.orders-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: #888;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0e0d0;
+  border-top-color: #e85d04;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-primary {
+  background: #e85d04;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #c94e00;
+}
+
+.error-msg {
+  color: #e00;
+  font-size: 0.9rem;
+}
