@@ -91,7 +91,7 @@ function Create() {
             name="dates"
             value={form.dates}
             onChange={handleChange}
-            placeholder="예: 2024-03-01 ~ 2024-03-07"
+            placeholder="예: 2026-04-01 ~ 2026-04-07"
             required
           />
         </div>

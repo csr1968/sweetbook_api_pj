@@ -23,27 +23,37 @@ async function generateGuidebookContent(tripData) {
 {
   "title": "가이드북 제목 (한국어, 20자 이내)",
   "subtitle": "부제목 (한국어, 30자 이내)",
-  "coverText": "표지 소개 문구 (2~3줄)",
+  "coverText": "표지 소개 문구 (2~3줄, 감성적으로)",
   "pages": [
     {
       "pageType": "intro",
       "title": "여행 소개",
-      "content": "여행 소개 텍스트 (200자 이내)"
+      "content": "여행의 전체적인 분위기와 동기, 설레임을 담은 소개글 (300~500자, 풍부하게 서술)"
     },
     {
       "pageType": "highlights",
       "title": "여행 하이라이트",
-      "content": "주요 볼거리/활동 리스트 (줄바꿈으로 구분)"
+      "content": "주요 볼거리/활동을 각각 2~3줄씩 설명 (총 5~7개, 줄바꿈으로 구분, 각 항목은 '● 장소명: 설명' 형식)"
+    },
+    {
+      "pageType": "food",
+      "title": "현지 맛집 & 먹거리",
+      "content": "꼭 먹어봐야 할 현지 음식과 추천 맛집 (300~400자, 생생하게 묘사)"
     },
     {
       "pageType": "tips",
       "title": "여행 꿀팁",
-      "content": "현지 팁, 주의사항 등 (200자 이내)"
+      "content": "교통, 날씨, 문화, 예산 등 실용적인 팁 (300~400자, 구체적으로)"
+    },
+    {
+      "pageType": "photospot",
+      "title": "포토스팟 추천",
+      "content": "사진 찍기 좋은 장소와 촬영 팁 (200~300자)"
     },
     {
       "pageType": "closing",
-      "title": "마무리",
-      "content": "여행을 마무리하는 감성적인 문구 (100자 이내)"
+      "title": "여행을 마치며",
+      "content": "여행의 여운과 감상, 다음 방문을 기약하는 감성적인 마무리 (200~300자)"
     }
   ]
 }
@@ -53,7 +63,7 @@ async function generateGuidebookContent(tripData) {
     model: 'llama-3.3-70b-versatile',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.7,
-    max_tokens: 1500,
+    max_tokens: 3000,
   });
 
   const raw = response.choices[0].message.content.trim();

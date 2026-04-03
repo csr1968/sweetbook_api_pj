@@ -14,7 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/csr1968/sweetbook_api_pj.git"
   },
-  "keywords": ["travel", "guidebook", "book-print-api"],
+  "keywords": [
+    "travel",
+    "guidebook",
+    "book-print-api"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -23,12 +27,16 @@
   },
   "homepage": "https://github.com/csr1968/sweetbook_api_pj#readme",
   "dependencies": {
+    "axios": "^1.14.0",
+    "bcryptjs": "^3.0.3",
     "bookprintapi-nodejs-sdk": "github:sweet-book/bookprintapi-nodejs-sdk",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.0",
     "express": "^5.2.1",
     "groq-sdk": "^1.1.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3",
     "multer": "^2.1.1",
     "nodemon": "^3.1.14"
   }

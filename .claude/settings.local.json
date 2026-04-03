@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(ls /Users/choseongryeol/Workspaces/sweetbook_api_pj/client/.env*)"
+    ]
+  }
+}

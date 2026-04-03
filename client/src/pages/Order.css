@@ -50,6 +50,27 @@
   font-size: 0.95rem;
 }
 
+.form-section-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #333;
+  border-bottom: 1.5px solid #eee;
+  padding-bottom: 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 500px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group input,
 .form-group textarea {
   border: 1.5px solid #ddd;
   border-radius: 8px;
@@ -57,10 +78,15 @@
   font-size: 0.95rem;
   outline: none;
   font-family: inherit;
-  resize: vertical;
   transition: border-color 0.2s;
+  width: 100%;
 }
 
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
 .form-group textarea:focus {
   border-color: #e85d04;
 }

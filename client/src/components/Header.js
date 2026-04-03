@@ -1,8 +1,16 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import './Header.css';
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <header className="header">
@@ -17,6 +25,14 @@ function Header() {
           <Link to="/orders" className={location.pathname === '/orders' ? 'active' : ''}>
             주문 내역
           </Link>
+          {user ? (
+            <div className="nav-user">
+              <span className="nav-username">{user.name}</span>
+              <button className="btn-logout" onClick={handleLogout}>로그아웃</button>
+            </div>
+          ) : (
+            <Link to="/login" className="btn-nav-login">로그인</Link>
+          )}
         </nav>
       </div>
     </header>

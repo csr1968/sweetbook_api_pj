@@ -15,36 +15,31 @@ router.get('/:orderUid', async (req, res) => {
 });
 
 // POST /api/orders/estimate - 주문 견적 조회
-// body: { bookUid, quantity, shippingCountry }
+// body: { items: [{ bookUid, quantity }] }
 router.post('/estimate', async (req, res) => {
-  const { bookUid, quantity = 1, shippingCountry = 'KR' } = req.body;
+  const { items } = req.body;
 
-  if (!bookUid) {
-    return res.status(400).json({ error: 'bookUid는 필수입니다.' });
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'items 배열은 필수입니다.' });
   }
 
-  const estimate = await client.orders.estimate({
-    bookUid,
-    quantity,
-    shippingCountry,
-  });
+  const estimate = await client.orders.estimate({ items });
   res.json(estimate);
 });
 
 // POST /api/orders - 주문 생성
-// body: { bookUid, quantity, recipientName, phone, address, shippingCountry }
+// body: { items: [{ bookUid, quantity }], shipping: { recipientName, recipientPhone, postalCode, address1, address2 } }
 router.post('/', async (req, res) => {
-  const { bookUid, quantity = 1, recipientName, phone, address, shippingCountry = 'KR' } = req.body;
+  const { items, shipping, externalRef } = req.body;
 
-  if (!bookUid || !recipientName || !address) {
-    return res.status(400).json({ error: 'bookUid, recipientName, address는 필수입니다.' });
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'items 배열은 필수입니다.' });
+  }
+  if (!shipping || !shipping.recipientName || !shipping.recipientPhone || !shipping.postalCode || !shipping.address1) {
+    return res.status(400).json({ error: 'recipientName, recipientPhone, postalCode, address1은 필수입니다.' });
   }
 
-  const order = await client.orders.create({
-    bookUid,
-    quantity,
-    shipping: { recipientName, phone, address, country: shippingCountry },
-  });
+  const order = await client.orders.create({ items, shipping, externalRef });
   res.status(201).json(order);
 });
 

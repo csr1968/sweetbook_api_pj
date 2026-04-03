@@ -1,17 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBook, estimateOrder, createOrder } from '../services/api';
+import { createBook, estimateOrder, createOrder, getTemplates } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import './Order.css';
 
 function Order() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
-  const [address, setAddress] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | estimating | ordering | done
+  const [shipping, setShipping] = useState({
+    recipientName: user?.name || '',
+    recipientPhone: user?.phone || '',
+    postalCode: user?.postalCode || '',
+    address1: user?.address1 || '',
+    address2: user?.address2 || '',
+  });
+  const [status, setStatus] = useState('idle'); 
+  const [templates, setTemplates] = useState({ cover: null, content: null });
   const [estimate, setEstimate] = useState(null);
+  const [bookUid, setBookUid] = useState(null);
   const [orderResult, setOrderResult] = useState(null);
   const [error, setError] = useState('');
+
+  // 템플릿 목록 자동 조회 (A4 소프트커버 기준)
+  useEffect(() => {
+    getTemplates()
+      .then((res) => {
+        const list = res.data?.data?.templates || [];
+        const TARGET_SPEC = 'PHOTOBOOK_A4_SC';
+        const coverTpl = list.find(
+          (t) => t.templateKind === 'cover' && t.bookSpecUid === TARGET_SPEC
+        );
+        const contentTpl = list.find(
+          (t) => t.templateKind === 'content' && t.bookSpecUid === TARGET_SPEC
+        );
+        if (coverTpl && contentTpl) {
+          setTemplates({ cover: coverTpl.templateUid, content: contentTpl.templateUid });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   if (!state?.content) {
     return (
@@ -24,23 +53,35 @@ function Order() {
     );
   }
 
-  const { content, tripData } = state;
+  const { content, tripData, uploadedPhotos = [] } = state;
+
+  const handleShippingChange = (e) => {
+    setShipping({ ...shipping, [e.target.name]: e.target.value });
+  };
 
   const handleEstimate = async () => {
+    if (!templates.cover || !templates.content) {
+      setError('템플릿 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
     setError('');
     setStatus('estimating');
     try {
-      // 먼저 책 생성
+      // 1. 책 생성
       const bookRes = await createBook({
-        title: content.title,
-        description: content.subtitle || '',
-        content,
+        title: content.title || '나의 여행 가이드북',
+        guidebookContent: content,
+        tripData,
+        uploadedPhotos,
+        coverTemplateUid: templates.cover,
+        contentTemplateUid: templates.content,
       });
-      const bookUid = bookRes.data.uid;
+      const createdBookUid = bookRes.data.bookUid;
+      setBookUid(createdBookUid);
 
-      // 견적 조회
-      const estRes = await estimateOrder(bookUid, quantity);
-      setEstimate({ ...estRes.data, bookUid });
+      // 2. 견적 조회
+      const estRes = await estimateOrder(createdBookUid, quantity);
+      setEstimate(estRes.data);
       setStatus('idle');
     } catch (err) {
       setError(err.response?.data?.error || '견적 조회에 실패했습니다.');
@@ -49,16 +90,16 @@ function Order() {
   };
 
   const handleOrder = async () => {
-    if (!address.trim()) {
-      setError('배송 주소를 입력해주세요.');
+    if (!shipping.recipientName.trim() || !shipping.recipientPhone.trim() || !shipping.postalCode.trim() || !shipping.address1.trim()) {
+      setError('받는 분 이름, 연락처, 우편번호, 도로명 주소는 필수입니다.');
       return;
     }
-    if (!estimate?.bookUid) return;
+    if (!bookUid) return;
 
     setError('');
     setStatus('ordering');
     try {
-      const res = await createOrder(estimate.bookUid, quantity, address);
+      const res = await createOrder(bookUid, quantity, shipping);
       setOrderResult(res.data);
       setStatus('done');
     } catch (err) {
@@ -72,7 +113,7 @@ function Order() {
       <div className="order-done">
         <div className="done-icon">🎉</div>
         <h2>주문이 완료되었습니다!</h2>
-        <p>주문번호: <strong>{orderResult.uid || orderResult.id}</strong></p>
+        <p>주문번호: <strong>{orderResult.orderUid || orderResult.uid || orderResult.id}</strong></p>
         <p className="done-desc">
           가이드북 인쇄가 시작되었습니다. 배송까지 영업일 기준 5~7일 소요됩니다.
         </p>
@@ -101,6 +142,7 @@ function Order() {
       </div>
 
       <div className="order-form">
+        {/* 수량 */}
         <div className="form-group">
           <label>수량</label>
           <div className="quantity-control">
@@ -110,13 +152,58 @@ function Order() {
           </div>
         </div>
 
+        {/* 배송 정보 */}
+        <div className="form-section-title">배송 정보</div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label>받는 분 이름 *</label>
+            <input
+              name="recipientName"
+              value={shipping.recipientName}
+              onChange={handleShippingChange}
+              placeholder="홍길동"
+            />
+          </div>
+          <div className="form-group">
+            <label>연락처 *</label>
+            <input
+              name="recipientPhone"
+              value={shipping.recipientPhone}
+              onChange={handleShippingChange}
+              placeholder="010-1234-5678"
+            />
+          </div>
+        </div>
+
         <div className="form-group">
-          <label>배송 주소</label>
-          <textarea
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="배송받을 주소를 입력해주세요"
-            rows={3}
+          <label>우편번호 *</label>
+          <input
+            name="postalCode"
+            value={shipping.postalCode}
+            onChange={handleShippingChange}
+            placeholder="08504"
+            style={{ maxWidth: 160 }}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>도로명 주소 *</label>
+          <input
+            name="address1"
+            value={shipping.address1}
+            onChange={handleShippingChange}
+            placeholder="서울특별시 금천구 서부샛길 123"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>상세 주소</label>
+          <input
+            name="address2"
+            value={shipping.address2}
+            onChange={handleShippingChange}
+            placeholder="210동 401호"
           />
         </div>
 
@@ -128,7 +215,7 @@ function Order() {
             onClick={handleEstimate}
             disabled={status === 'estimating'}
           >
-            {status === 'estimating' ? '견적 조회 중...' : '가격 견적 조회'}
+            {status === 'estimating' ? '책 생성 & 견적 조회 중...' : '가격 견적 조회'}
           </button>
         ) : (
           <div className="estimate-result">
