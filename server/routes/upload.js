@@ -10,6 +10,7 @@ router.post('/photos', upload.array('photos', 20), (req, res) => {
   const files = req.files.map((f) => ({
     filename: f.filename,
     originalname: f.originalname,
+    mimetype: f.mimetype,
     url: `/uploads/${f.filename}`,
     size: f.size,
   }));

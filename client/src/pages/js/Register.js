@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import '../css/Login.css';
 import '../css/Register.css';
 
 function Register() {
-  const { register } = useAuth();
+  const { register, user, loading: authLoading } = useAuth();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate('/main', { replace: true });
+    }
+  }, [user, authLoading, navigate]);
   
   const [form, setForm] = useState({
     username: '', password: '', name: '',
@@ -28,7 +34,7 @@ function Register() {
     setLoading(true);
     try {
       await register(form);
-      navigate('/');
+      navigate('/main');
     } catch (err) {
       setError(err.response?.data?.error || '회원가입에 실패했습니다.');
     } finally {

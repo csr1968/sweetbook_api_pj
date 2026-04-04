@@ -6,6 +6,8 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const isLanding = location.pathname === '/';
+  const homePath = user ? '/main' : '/';
 
   const handleLogout = () => {
     logout();
@@ -13,27 +15,26 @@ function Header() {
   };
 
   return (
-    <header className="header">
+    <header className={`header${isLanding ? ' header--landing' : ''}`}>
       <div className="header-inner">
-        <Link to="/" className="logo">
-          📚 SweetBook
+        <Link to={homePath} className="logo">
+          SweetBook
         </Link>
-        <nav className="nav">
-          <Link to="/create" className={location.pathname === '/create' ? 'active' : ''}>
-            가이드북 만들기
-          </Link>
-          <Link to="/orders" className={location.pathname === '/orders' ? 'active' : ''}>
-            주문 내역
-          </Link>
-          {user ? (
-            <div className="nav-user">
-              <Link to="/mypage" className="nav-username">{user.name}</Link>
-              <button className="btn-logout" onClick={handleLogout}>로그아웃</button>
-            </div>
-          ) : (
-            <Link to="/login" className="btn-nav-login">로그인</Link>
-          )}
-        </nav>
+        {!isLanding && (
+          <nav className="nav">
+            <Link to="/orders" className={location.pathname === '/orders' ? 'active' : ''}>
+              주문 내역
+            </Link>
+            {user ? (
+              <div className="nav-user">
+                <Link to="/mypage" className="nav-username">{user.name}</Link>
+                <button type="button" className="btn-logout" onClick={handleLogout}>로그아웃</button>
+              </div>
+            ) : (
+              <Link to="/login" className="btn-nav-login">로그인</Link>
+            )}
+          </nav>
+        )}
       </div>
     </header>
   );

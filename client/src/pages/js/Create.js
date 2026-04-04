@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { uploadPhotos, generateContent } from '../../services/api';
+import { COVER_STORAGE_KEY, getStoredCoverId, isValidCoverId } from '../../coverStyles';
 import '../css/Create.css';
 
 function Create() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [step, setStep] = useState(1); // 1: 정보입력, 2: 생성중
   const [form, setForm] = useState({
     destination: '',
@@ -15,6 +17,13 @@ function Create() {
   const [photos, setPhotos] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const q = searchParams.get('cover');
+    if (q && isValidCoverId(q)) {
+      sessionStorage.setItem(COVER_STORAGE_KEY, q);
+    }
+  }, [searchParams]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -51,7 +60,8 @@ function Create() {
       });
 
       // Preview 페이지로 이동 (생성된 콘텐츠 전달)
-      navigate('/preview', { state: { content: res.data, tripData: form } });
+      const coverStyle = getStoredCoverId();
+      navigate('/preview', { state: { content: res.data, tripData: form, coverStyle, uploadedPhotos } });
     } catch (err) {
       setError(err.response?.data?.error || '오류가 발생했습니다. 다시 시도해주세요.');
       setStep(1);
@@ -62,18 +72,18 @@ function Create() {
     return (
       <div className="loading-screen">
         <div className="spinner" />
-        <h2>AI가 가이드북을 만들고 있어요...</h2>
-        <p>잠시만 기다려주세요 ✨</p>
+        <h2 className="flow-page-title">AI가 가이드북을 만들고 있어요...</h2>
+        <p className="flow-page-desc">잠시만 기다려주세요 ✨</p>
       </div>
     );
   }
 
   return (
     <div className="create-page">
-      <h1>여행 가이드북 만들기</h1>
-      <p className="page-desc">여행 정보를 입력하면 AI가 가이드북 콘텐츠를 자동으로 작성해줘요.</p>
+      <h1 className="flow-page-title">여행 가이드북 만들기</h1>
+      <p className="page-desc flow-page-desc">여행 정보를 입력하면 AI가 가이드북 콘텐츠를 자동으로 작성해줘요.</p>
 
-      <form onSubmit={handleSubmit} className="create-form">
+      <form onSubmit={handleSubmit} className="create-form flow-surface">
         <div className="form-group">
           <label>여행지 *</label>
           <input

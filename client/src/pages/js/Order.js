@@ -46,7 +46,7 @@ function Order() {
     return (
       <div className="order-empty">
         <p>주문할 가이드북이 없습니다.</p>
-        <button className="btn-primary" onClick={() => navigate('/create')}>
+        <button type="button" className="btn-primary" onClick={() => navigate(user ? '/main' : '/')}>
           가이드북 만들기
         </button>
       </div>
@@ -112,16 +112,16 @@ function Order() {
     return (
       <div className="order-done">
         <div className="done-icon">🎉</div>
-        <h2>주문이 완료되었습니다!</h2>
+        <h2 className="flow-page-title">주문이 완료되었습니다!</h2>
         <p>주문번호: <strong>{orderResult.orderUid || orderResult.uid || orderResult.id}</strong></p>
         <p className="done-desc">
           가이드북 인쇄가 시작되었습니다. 배송까지 영업일 기준 5~7일 소요됩니다.
         </p>
         <div className="done-actions">
-          <button className="btn-secondary" onClick={() => navigate('/orders')}>
+          <button type="button" className="btn-secondary" onClick={() => navigate('/orders')}>
             주문 내역 보기
           </button>
-          <button className="btn-primary" onClick={() => navigate('/create')}>
+          <button type="button" className="btn-primary" onClick={() => navigate(user ? '/main' : '/')}>
             새 가이드북 만들기
           </button>
         </div>
@@ -131,17 +131,16 @@ function Order() {
 
   return (
     <div className="order-page">
-      <h1>주문하기</h1>
-      <p className="page-desc">가이드북을 실제 책으로 인쇄하여 받아보세요.</p>
+      <h1 className="flow-page-title">주문하기</h1>
+      <p className="page-desc flow-page-desc">가이드북을 실제 책으로 인쇄하여 받아보세요.</p>
 
-      {/* 가이드북 요약 */}
-      <div className="order-summary">
+      <div className="order-summary flow-surface flow-accent-border">
         <h3>📖 {content.title || '나의 여행 가이드북'}</h3>
         <p>{tripData?.destination} · {tripData?.dates}</p>
         <p className="pages-count">{(content.pages || []).length}페이지</p>
       </div>
 
-      <div className="order-form">
+      <div className="order-form flow-surface">
         {/* 수량 */}
         <div className="form-group">
           <label>수량</label>
@@ -219,9 +218,9 @@ function Order() {
           </button>
         ) : (
           <div className="estimate-result">
-            <div className="estimate-info">
+            <div className="estimate-info flow-estimate-bg">
               <span>예상 금액</span>
-              <strong>{estimate.totalPrice?.toLocaleString() || '—'}원</strong>
+              <strong>{estimate.totalAmount?.toLocaleString() || '—'}원</strong>
             </div>
             <button
               className="btn-primary btn-large"

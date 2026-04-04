@@ -70,10 +70,8 @@ router.post('/create', async (req, res) => {
   const bookUid = book.bookUid || book.uid;
   console.log('1. book created: ', bookUid);
 
-  // 첫 번째 사진 URL (표지용)
-  const firstPhotoUrl = uploadedPhotos.length > 0
-    ? `${process.env.SERVER_URL || 'http://localhost:4000'}/uploads/${uploadedPhotos[0].filename}`
-    : 'https://picsum.photos/seed/travel/800/600';
+  // 표지 사진 — 로컬 URL은 외부 API에서 접근 불가하므로 공개 이미지 사용
+  const firstPhotoUrl = 'https://picsum.photos/seed/travel/800/600';
 
   // 2. 표지 생성 — 알림장A 표지 템플릿 파라미터로 매핑
   await client.covers.create(bookUid, coverTemplateUid, {
@@ -120,10 +118,13 @@ router.post('/create', async (req, res) => {
   for (const photo of uploadedPhotos) {
     const filePath = path.join(__dirname, '../../uploads', photo.filename);
     if (fs.existsSync(filePath)) {
-      const uploaded = await client.photos.upload(bookUid, filePath, {
-        description: photo.originalname || '',
-      });
-      // 사진 페이지: photos 필드에 배열로 전달
+      const fileBuffer = fs.readFileSync(filePath);
+      const mimeType = photo.mimetype || 'image/jpeg';
+      const fileObj = new File([fileBuffer], photo.originalname || photo.filename, { type: mimeType });
+      console.log('photo upload attempt - name:', fileObj.name, 'size:', fileObj.size, 'type:', fileObj.type);
+      const uploaded = await client.photos.upload(bookUid, fileObj);
+      const photoUid = uploaded.photoUid || uploaded.uid;
+
       await client.contents.insert(
         bookUid,
         contentTemplateUid,
@@ -139,7 +140,7 @@ router.post('/create', async (req, res) => {
           dayOfWeekX: '210',
           hasTeacherComment: 'false',
           lineVertical: LINE_IMAGE_URL,
-          photos: [uploaded.photoUid || uploaded.uid],
+          ...(photoUid && { photos: [photoUid] }),
         },
         { breakBefore: 'page' }
       );

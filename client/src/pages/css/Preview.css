@@ -23,37 +23,61 @@
 }
 
 .btn-secondary {
-  background: #fff;
-  color: #333;
-  border: 1.5px solid #ddd;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #3a342e;
+  border: 1.5px solid rgba(58, 52, 46, 0.15);
+  border-radius: 10px;
   padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 600;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .btn-secondary:hover {
-  border-color: #999;
+  border-color: #b8956c;
+  background: #fff;
 }
 
-/* 표지 */
+/* 표지 — 선택한 표지 톤 */
 .book-cover {
-  background: linear-gradient(135deg, #e85d04 0%, #c94e00 100%);
   color: #fff;
   border-radius: 20px;
   padding: 60px 48px;
   text-align: center;
   position: relative;
-  box-shadow: 0 8px 32px rgba(232, 93, 4, 0.3);
+  box-shadow: 0 12px 40px rgba(58, 52, 46, 0.18);
+}
+
+.book-cover--dune {
+  background: linear-gradient(145deg, #f0e4d7 0%, #c9a88a 55%, #a67c52 100%);
+}
+
+.book-cover--sunset {
+  background: linear-gradient(145deg, #ffd4c4 0%, #e8a598 45%, #c75b7a 100%);
+}
+
+.book-cover--ocean {
+  background: linear-gradient(145deg, #c5e8ef 0%, #7eb6c8 50%, #3d5a80 100%);
+}
+
+.book-cover--forest {
+  background: linear-gradient(145deg, #d4e4d4 0%, #7d9b76 50%, #3d5344 100%);
+}
+
+.book-cover--lavender {
+  background: linear-gradient(145deg, #e8e0f0 0%, #b8a9c9 50%, #6b5b7c 100%);
+}
+
+.book-cover--midnight {
+  background: linear-gradient(145deg, #4a5568 0%, #2d3748 55%, #1a202c 100%);
 }
 
 .cover-badge {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
   padding: 4px 10px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -67,13 +91,13 @@
 
 .cover-subtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  opacity: 0.95;
   margin-bottom: 16px;
 }
 
 .cover-text {
   font-size: 0.95rem;
-  opacity: 0.8;
+  opacity: 0.88;
   line-height: 1.7;
   max-width: 500px;
   margin: 0 auto 20px;
@@ -81,10 +105,19 @@
 
 .cover-meta {
   font-size: 0.875rem;
-  opacity: 0.7;
+  opacity: 0.78;
 }
 
-/* 페이지 목록 */
+.photo-notice {
+  background: rgba(196, 165, 116, 0.12);
+  border: 1px solid rgba(196, 165, 116, 0.3);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  color: #6b4f2a;
+  font-weight: 600;
+}
+
 .pages-section h2 {
   font-size: 1.3rem;
   font-weight: 700;
@@ -98,16 +131,14 @@
 }
 
 .page-card {
-  background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 28px 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
 .page-num {
   font-size: 0.8rem;
-  color: #e85d04;
+  color: #8a6d4d;
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -116,10 +147,11 @@
   font-size: 1.15rem;
   font-weight: 700;
   margin-bottom: 12px;
+  color: #3a342e;
 }
 
 .page-content {
-  color: #444;
+  color: #4a4540;
   line-height: 1.8;
   white-space: pre-wrap;
 }
@@ -128,9 +160,9 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background: #f5f0eb;
-  color: #888;
-  border-radius: 6px;
+  background: rgba(196, 165, 116, 0.15);
+  color: #6b635a;
+  border-radius: 8px;
   padding: 3px 10px;
   font-size: 0.78rem;
 }

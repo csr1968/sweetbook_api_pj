@@ -1,0 +1,31 @@
+/* 가이드북 제작 플로우 공통 톤 (진입·표지 선택과 맞춤) */
+.flow-page-title {
+  color: #3a342e;
+}
+
+.flow-page-desc {
+  color: #6b635a;
+}
+
+.flow-surface {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(58, 52, 46, 0.08);
+  box-shadow: 0 4px 24px rgba(58, 52, 46, 0.06);
+}
+
+.flow-accent-border {
+  border-left: 4px solid #b8956c;
+}
+
+.flow-estimate-bg {
+  background: linear-gradient(135deg, #f5efe6 0%, #ebe0d4 100%) !important;
+}
+
+.flow-estimate-bg strong {
+  color: #8a6d4d;
+}
+
+.flow-focus:focus,
+.flow-focus:focus-visible {
+  border-color: #b8956c !important;
+}

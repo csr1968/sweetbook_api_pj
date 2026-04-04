@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../contexts/AuthContext';
 import '../css/Login.css';
 
 function Login() {
-  const { login, googleLogin } = useAuth();
-  
+  const { login, googleLogin, user, loading: authLoading } = useAuth();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate('/main', { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   const [form, setForm]       = useState({ username: '', password: '' });
   const [error, setError]     = useState('');
@@ -21,7 +27,7 @@ function Login() {
     setLoading(true);
     try {
       await login(form.username, form.password);
-      navigate('/');
+      navigate('/main');
     } catch (err) {
       setError(err.response?.data?.error || '로그인에 실패했습니다.');
     } finally {
@@ -34,7 +40,7 @@ function Login() {
     setLoading(true);
     try {
       await googleLogin(credentialResponse.credential);
-      navigate('/');
+      navigate('/main');
     } catch (err) {
       setError('Google 로그인에 실패했습니다.');
     } finally {

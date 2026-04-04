@@ -29,7 +29,7 @@ function Orders() {
     <div className="orders-page">
       <div className="orders-header">
         <h1>주문 내역</h1>
-        <button className="btn-primary" onClick={() => navigate('/create')}>
+        <button type="button" className="btn-primary" onClick={() => navigate('/main')}>
           새 가이드북 만들기
         </button>
       </div>
@@ -39,7 +39,7 @@ function Orders() {
       {orders.length === 0 ? (
         <div className="orders-empty">
           <p>아직 주문 내역이 없어요.</p>
-          <button className="btn-primary" onClick={() => navigate('/create')}>
+          <button type="button" className="btn-primary" onClick={() => navigate('/main')}>
             첫 번째 가이드북 만들기
           </button>
         </div>
