@@ -73,11 +73,13 @@ router.post('/google', async (req, res) => {
     }
 
     const { sub: googleId, name, email } = data;
+    const googleName = name || email;
     let user = await User.findOne({ googleId });
     if (!user) {
-      // 이메일을 username으로 사용, 중복 시 googleId로 대체
       const username = email || googleId;
-      user = await User.create({ googleId, name: name || email, username });
+      user = await User.create({ googleId, name: googleName, username });
+    } else if (!user.name && googleName) {
+      user = await User.findByIdAndUpdate(user._id, { name: googleName }, { new: true });
     }
     res.json({ token: signToken(user), user: userProfile(user) });
   } catch (err) {
@@ -91,6 +93,23 @@ router.get('/me', requireAuth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-passwordHash');
     if (!user) return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
     res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT /api/auth/me
+router.put('/me', requireAuth, async (req, res) => {
+  const { name, phone, postalCode, address1, address2 } = req.body;
+  if (!name) return res.status(400).json({ error: '이름은 필수입니다.' });
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { name, phone, postalCode, address1, address2 },
+      { new: true }
+    ).select('-passwordHash');
+    if (!user) return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+    res.json({ user: userProfile(user) });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

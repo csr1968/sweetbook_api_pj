@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { loginUser, registerUser, googleLoginUser, getMe } from '../services/api';
+import { loginUser, registerUser, googleLoginUser, getMe, updateProfile } from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -34,13 +34,18 @@ export function AuthProvider({ children }) {
     setUser(res.data.user);
   };
 
+  const updateUser = async (data) => {
+    const res = await updateProfile(data);
+    setUser(res.data.user);
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, googleLogin, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, googleLogin, register, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

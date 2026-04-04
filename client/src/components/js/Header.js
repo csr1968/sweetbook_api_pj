@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import './Header.css';
+import { useAuth } from '../../contexts/AuthContext';
+import '../css/Header.css';
 
 function Header() {
   const location = useLocation();
@@ -27,7 +27,7 @@ function Header() {
           </Link>
           {user ? (
             <div className="nav-user">
-              <span className="nav-username">{user.name}</span>
+              <Link to="/mypage" className="nav-username">{user.name}</Link>
               <button className="btn-logout" onClick={handleLogout}>로그아웃</button>
             </div>
           ) : (

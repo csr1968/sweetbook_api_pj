@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Preview.css';
+import '../css/Preview.css';
 
 function Preview() {
   const { state } = useLocation();

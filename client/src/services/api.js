@@ -16,6 +16,7 @@ export const registerUser = (data) => api.post('/auth/register', data);
 export const googleLoginUser = (data) => api.post('/auth/google', data);
 export const getMe = (token) =>
   api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+export const updateProfile = (data) => api.put('/auth/me', data);
 
 // 사진 업로드
 export const uploadPhotos = (files) => {

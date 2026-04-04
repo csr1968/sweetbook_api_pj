@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { uploadPhotos, generateContent } from '../services/api';
-import './Create.css';
+import { uploadPhotos, generateContent } from '../../services/api';
+import '../css/Create.css';
 
 function Create() {
   const navigate = useNavigate();

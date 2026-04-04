@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBook, estimateOrder, createOrder, getTemplates } from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
-import './Order.css';
+import { createBook, estimateOrder, createOrder, getTemplates } from '../../services/api';
+import { useAuth } from '../../contexts/AuthContext';
+import '../css/Order.css';
 
 function Order() {
   const { state } = useLocation();

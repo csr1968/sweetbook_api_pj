@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import './Home.css';
+import '../css/Home.css';
 
 function Home() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Home() {
         <p className="hero-desc">
           여행 사진과 이야기를 업로드하면 AI가 멋진 가이드북을 만들어드려요.
           <br />
-          소중한 여행을 책으로 간직하세요.
+          여행준비를 같이 해보세요.
         </p>
         <button className="btn-primary btn-large" onClick={() => navigate('/create')}>
           가이드북 만들기

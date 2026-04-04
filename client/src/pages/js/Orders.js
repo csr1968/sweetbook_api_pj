@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getOrders } from '../services/api';
-import './Orders.css';
+import { getOrders } from '../../services/api';
+import '../css/Orders.css';
 
 function Orders() {
   const navigate = useNavigate();
