@@ -10,8 +10,8 @@ function Header() {
   const homePath = user ? '/main' : '/';
 
   const handleLogout = () => {
-    logout();
     navigate('/');
+    setTimeout(logout, 0);
   };
 
   return (

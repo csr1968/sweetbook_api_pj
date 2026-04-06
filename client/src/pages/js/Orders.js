@@ -9,7 +9,7 @@ function Orders() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
+useEffect(() => {
     getOrders()
       .then((res) => setOrders(res.data.orders || res.data || []))
       .catch(() => setError('주문 내역을 불러오지 못했습니다.'))
@@ -46,17 +46,18 @@ function Orders() {
       ) : (
         <div className="orders-list">
           {orders.map((order, i) => (
-            <div key={order.uid || order.id || i} className="order-card">
+            <div key={order.orderUid || i} className="order-card">
               <div className="order-card-top">
-                <span className="order-id">주문번호: {order.uid || order.id}</span>
-                <span className={`order-status status-${order.status}`}>
-                  {order.status || '처리중'}
+                <span className="order-id">주문번호: {order.orderUid}</span>
+                <span className={`order-status status-${order.orderStatus}`}>
+                  {order.orderStatusDisplay || '처리중'}
                 </span>
               </div>
               <div className="order-card-body">
-                <p>수량: {order.quantity || '—'}권</p>
-                {order.totalPrice && (
-                  <p>금액: {order.totalPrice.toLocaleString()}원</p>
+                {order.externalRef && <p className="order-title">{order.externalRef}</p>}
+                <p>수량: {order.itemCount || '—'}권</p>
+                {order.totalAmount && (
+                  <p>금액: {order.totalAmount.toLocaleString()}원</p>
                 )}
                 {order.createdAt && (
                   <p className="order-date">

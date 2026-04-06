@@ -42,6 +42,14 @@ function Order() {
       .catch(() => {});
   }, []);
 
+  // bookUid 세팅 후 수량 변경 시 자동 재조회
+  useEffect(() => {
+    if (!bookUid) return;
+    estimateOrder(bookUid, quantity)
+      .then((res) => setEstimate(res.data))
+      .catch(() => {});
+  }, [bookUid, quantity]);
+
   if (!state?.content) {
     return (
       <div className="order-empty">
@@ -99,7 +107,7 @@ function Order() {
     setError('');
     setStatus('ordering');
     try {
-      const res = await createOrder(bookUid, quantity, shipping);
+      const res = await createOrder(bookUid, quantity, shipping, content.title || '나의 여행 가이드북');
       setOrderResult(res.data);
       setStatus('done');
     } catch (err) {

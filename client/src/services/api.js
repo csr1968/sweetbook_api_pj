@@ -39,10 +39,11 @@ export const getBook = (bookUid) => api.get(`/books/${bookUid}`);
 export const estimateOrder = (bookUid, quantity = 1) =>
   api.post('/orders/estimate', { items: [{ bookUid, quantity }] });
 
-export const createOrder = (bookUid, quantity = 1, shipping) =>
-  api.post('/orders', { items: [{ bookUid, quantity }], shipping });
+export const createOrder = (bookUid, quantity = 1, shipping, externalRef) =>
+  api.post('/orders', { items: [{ bookUid, quantity }], shipping, externalRef });
 
 export const getOrders = () => api.get('/orders');
+export const deleteOrder = (orderUid) => api.delete(`/orders/${orderUid}`);
 
 // 템플릿 목록
 export const getTemplates = () => api.get('/templates');

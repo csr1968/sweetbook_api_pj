@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 
 // DELETE /api/orders/:orderUid - 주문 취소
 router.delete('/:orderUid', async (req, res) => {
-  await client.orders.cancel(req.params.orderUid);
+  await client.orders.cancel(req.params.orderUid, '고객 요청 취소');
   res.json({ message: '주문이 취소되었습니다.' });
 });
 

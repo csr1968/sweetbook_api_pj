@@ -1,7 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import '../css/Landing.css';
+
+function usePrefersReducedMotion() {
+  const [reduce, setReduce] = useState(() =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setReduce(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return reduce;
+}
 
 const TRAVEL_IMAGES = [
   'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=900&q=80',
@@ -15,6 +32,7 @@ const TRAVEL_IMAGES = [
 function Landing() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const reduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!loading && user) {
@@ -31,17 +49,27 @@ function Landing() {
   }
 
   const track = [...TRAVEL_IMAGES, ...TRAVEL_IMAGES];
+  const staticHeroSrc = TRAVEL_IMAGES[0];
 
   return (
     <div className="landing">
-      <div className="landing-carousel" aria-hidden="true">
-        <div className="landing-track">
-          {track.map((src, i) => (
-            <div key={`${src}-${i}`} className="landing-slide">
-              <img src={src} alt="" loading={i < 2 ? 'eager' : 'lazy'} />
-            </div>
-          ))}
-        </div>
+      <div
+        className={`landing-carousel${reduceMotion ? ' landing-carousel--static' : ''}`}
+        aria-hidden="true"
+      >
+        {reduceMotion ? (
+          <div className="landing-static-frame">
+            <img src={staticHeroSrc} alt="" className="landing-static-img" />
+          </div>
+        ) : (
+          <div className="landing-track">
+            {track.map((src, i) => (
+              <div key={`${src}-${i}`} className="landing-slide">
+                <img src={src} alt="" loading={i < 2 ? 'eager' : 'lazy'} />
+              </div>
+            ))}
+          </div>
+        )}
         <div className="landing-scrim" />
       </div>
 
