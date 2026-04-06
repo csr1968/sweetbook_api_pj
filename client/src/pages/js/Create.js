@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { uploadPhotos, generateContent } from '../../services/api';
-import { COVER_STORAGE_KEY, getStoredCoverId, isValidCoverId } from '../../coverStyles';
+import {
+  COVER_STORAGE_KEY,
+  COVER_PHOTO_STORAGE_KEY,
+  getStoredCoverId,
+  getStoredCoverPhotoId,
+  isValidCoverId,
+  isValidCoverPhotoId,
+} from '../../coverStyles';
 import '../css/Create.css';
 
 function Create() {
@@ -22,6 +29,11 @@ function Create() {
     const q = searchParams.get('cover');
     if (q && isValidCoverId(q)) {
       sessionStorage.setItem(COVER_STORAGE_KEY, q);
+    }
+
+    const p = searchParams.get('photo');
+    if (p && isValidCoverPhotoId(p)) {
+      sessionStorage.setItem(COVER_PHOTO_STORAGE_KEY, p);
     }
   }, [searchParams]);
 
@@ -61,7 +73,10 @@ function Create() {
 
       // Preview 페이지로 이동 (생성된 콘텐츠 전달)
       const coverStyle = getStoredCoverId();
-      navigate('/preview', { state: { content: res.data, tripData: form, coverStyle, uploadedPhotos } });
+      const coverPhotoId = getStoredCoverPhotoId();
+      navigate('/preview', {
+        state: { content: res.data, tripData: form, coverStyle, coverPhotoId, uploadedPhotos },
+      });
     } catch (err) {
       setError(err.response?.data?.error || '오류가 발생했습니다. 다시 시도해주세요.');
       setStep(1);

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { getStoredCoverId } from '../../coverStyles';
+import { getCoverPhotoById, getStoredCoverId, getStoredCoverPhotoId } from '../../coverStyles';
 import '../css/Preview.css';
 
 function Preview() {
@@ -21,12 +21,14 @@ function Preview() {
     );
   }
 
-  const { content, tripData, coverStyle: stateCover, uploadedPhotos = [] } = state;
+  const { content, tripData, coverStyle: stateCover, coverPhotoId: statePhotoId, uploadedPhotos = [] } = state;
   const coverStyle = stateCover || getStoredCoverId();
+  const coverPhotoId = statePhotoId || getStoredCoverPhotoId();
+  const coverPhoto = coverPhotoId && coverPhotoId !== 'none' ? getCoverPhotoById(coverPhotoId) : null;
   const { title, subtitle, coverText, pages = [] } = content;
 
   const goOrder = () => {
-    navigate('/order', { state: { content, tripData, coverStyle, uploadedPhotos } });
+    navigate('/order', { state: { content, tripData, coverStyle, coverPhotoId, uploadedPhotos } });
   };
 
   return (
@@ -48,6 +50,14 @@ function Preview() {
       </div>
 
       <div className={`book-cover book-cover--${coverStyle}`}>
+        {coverPhoto && (
+          <div
+            className="book-cover-photo"
+            style={{ backgroundImage: `url(${coverPhoto.src})` }}
+            aria-hidden="true"
+          />
+        )}
+        <div className="book-cover-scrim" aria-hidden="true" />
         <div className="cover-badge">표지</div>
         <h2 className="cover-title">{title || '나의 여행 가이드북'}</h2>
         {subtitle && <p className="cover-subtitle">{subtitle}</p>}

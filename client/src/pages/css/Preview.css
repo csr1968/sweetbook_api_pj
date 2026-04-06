@@ -46,6 +46,25 @@
   text-align: center;
   position: relative;
   box-shadow: 0 12px 40px rgba(58, 52, 46, 0.18);
+  overflow: hidden;
+}
+
+.book-cover-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.book-cover-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 35%, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.62) 70%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(135deg, rgba(58, 52, 46, 0.25) 0%, rgba(58, 52, 46, 0.55) 100%);
+  pointer-events: none;
 }
 
 .book-cover--dune {
@@ -81,18 +100,23 @@
   padding: 4px 10px;
   font-size: 0.8rem;
   font-weight: 600;
+  z-index: 2;
 }
 
 .cover-title {
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
 }
 
 .cover-subtitle {
   font-size: 1.1rem;
   opacity: 0.95;
   margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .cover-text {
@@ -101,11 +125,15 @@
   line-height: 1.7;
   max-width: 500px;
   margin: 0 auto 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .cover-meta {
   font-size: 0.875rem;
   opacity: 0.78;
+  position: relative;
+  z-index: 2;
 }
 
 .photo-notice {
