@@ -22,9 +22,11 @@ function Header() {
         </Link>
         {!isLanding && (
           <nav className="nav">
+            {user && (
             <Link to="/orders" className={location.pathname === '/orders' ? 'active' : ''}>
               주문 내역
             </Link>
+          )}
             {user ? (
               <div className="nav-user">
                 <Link to="/mypage" className="nav-username">{user.name}</Link>

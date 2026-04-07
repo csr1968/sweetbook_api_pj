@@ -68,7 +68,6 @@ router.post('/create', async (req, res) => {
     creationType: 'TEST',
   });
   const bookUid = book.bookUid || book.uid;
-  console.log('1. book created: ', bookUid);
 
   // 표지 사진 — 로컬 URL은 외부 API에서 접근 불가하므로 공개 이미지 사용
   const firstPhotoUrl = 'https://picsum.photos/seed/travel/800/600';
@@ -81,13 +80,11 @@ router.post('/create', async (req, res) => {
     periodText: tripData.dates || '',
     coverPhoto: firstPhotoUrl,
   });
-  console.log('2. cover created');
 
   // 3. 내지 삽입 (텍스트 페이지) — 알림장 내지 템플릿으로 매핑
   const { year, month } = parseTripDate(tripData.dates);
   const monthNum = month.padStart(2, '0');
 
-  console.log('pages count: ', guidebookContent?.pages?.length, JSON.stringify(guidebookContent?.pages?.[0]));
   if (guidebookContent.pages && guidebookContent.pages.length > 0) {
     for (let i = 0; i < guidebookContent.pages.length; i++) {
       const page = guidebookContent.pages[i];
@@ -121,7 +118,6 @@ router.post('/create', async (req, res) => {
       const fileBuffer = fs.readFileSync(filePath);
       const mimeType = photo.mimetype || 'image/jpeg';
       const fileObj = new File([fileBuffer], photo.originalname || photo.filename, { type: mimeType });
-      console.log('photo upload attempt - name:', fileObj.name, 'size:', fileObj.size, 'type:', fileObj.type);
       const uploaded = await client.photos.upload(bookUid, fileObj);
       const photoUid = uploaded.photoUid || uploaded.uid;
 
@@ -172,17 +168,12 @@ router.post('/create', async (req, res) => {
   }
 
   // 5. 책 최종화
-  console.log('4. finalizing..');
   const finalized = await client.books.finalize(bookUid);
 
   res.status(201).json({ book: finalized, bookUid });
   } catch (err) {
-    console.error('Book create error: ', err.message);
-    console.error('errorCode: ', err.errorCode);
-    console.error('statusCode: ', err.statusCode);
-    console.error('details: ', JSON.stringify(err.details));
-    console.error('full err: ', JSON.stringify(err, Object.getOwnPropertyNames(err)));
-    res.status(500).json({ error: err.message, details: err.details, errorCode: err.errorCode});
+    console.error('Book create error:', err.message);
+    res.status(500).json({ error: err.message, details: err.details, errorCode: err.errorCode });
   }
 });
 

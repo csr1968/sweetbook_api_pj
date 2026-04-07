@@ -52,7 +52,7 @@ function Login() {
     <div className="login-container">
       <div className="login-box">
         <div className="login-title">
-          <span className="login-icon">📚</span>
+          <span className="login-icon">✈️</span>
           <h1>SweetBook</h1>
           <p>로그인 후 가이드북을 만들어보세요</p>
         </div>

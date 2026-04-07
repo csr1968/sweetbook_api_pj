@@ -34,7 +34,7 @@ button {
 }
 
 .btn-primary {
-  background: #c4a574;
+  background: #5f6368;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -45,7 +45,7 @@ button {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #b8956c;
+  background: #9c9fa3;
 }
 
 .btn-primary:disabled {

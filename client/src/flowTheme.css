@@ -14,7 +14,7 @@
 }
 
 .flow-accent-border {
-  border-left: 4px solid #b8956c;
+  border-left: 4px solid #5f6368;
 }
 
 .flow-estimate-bg {
@@ -27,5 +27,5 @@
 
 .flow-focus:focus,
 .flow-focus:focus-visible {
-  border-color: #b8956c !important;
+  border-color: #5f6368 !important;
 }

@@ -22,7 +22,7 @@
 
 .pages-count {
   margin-top: 4px;
-  color: #8a6d4d !important;
+  color: #575a5e !important;
   font-weight: 600;
 }
 
@@ -83,7 +83,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #b8956c;
+  border-color: #5f6368;
 }
 
 .quantity-control {
@@ -106,8 +106,8 @@
 }
 
 .quantity-control button:hover {
-  border-color: #b8956c;
-  color: #8a6d4d;
+  border-color: #5f6368;
+  color: #5f6368;
 }
 
 .quantity-control span {
@@ -155,7 +155,7 @@
 }
 
 .order-page .btn-secondary:hover {
-  border-color: #b8956c;
+  border-color: #5f6368;
   background: #fff;
 }
 

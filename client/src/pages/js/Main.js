@@ -137,7 +137,7 @@ function Main() {
 
         <div className="main-cta">
           <button type="button" className="btn-primary btn-large" onClick={handleStart}>
-            이대로 내용 만들기 →
+            가이드북 만들기 →
           </button>
         </div>
       </section>

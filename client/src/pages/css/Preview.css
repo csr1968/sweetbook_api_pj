@@ -34,7 +34,7 @@
 }
 
 .btn-secondary:hover {
-  border-color: #b8956c;
+  border-color: #5f6368;
   background: #fff;
 }
 
@@ -166,7 +166,7 @@
 
 .page-num {
   font-size: 0.8rem;
-  color: #8a6d4d;
+  color: #6a6e73;
   font-weight: 700;
   margin-bottom: 8px;
 }

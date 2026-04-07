@@ -40,8 +40,25 @@
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
-  border-color: #b8956c;
+.form-group textarea:focus,
+.form-group input:focus-visible,
+.form-group textarea:focus-visible {
+  border-color: #5f6368;
+  outline: none;
+}
+
+/* Chrome/Safari 자동완성 시 노란 배경·테두리처럼 보이는 현상 완화 + 포커스 색 통일 */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group textarea:-webkit-autofill,
+.form-group textarea:-webkit-autofill:hover,
+.form-group textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #2e2a26;
+  caret-color: #2e2a26;
+  border: 1.5px solid #5f6368;
+  box-shadow: 0 0 0 1000px #fff inset;
+  transition: background-color 99999s ease-out;
 }
 
 .file-input {

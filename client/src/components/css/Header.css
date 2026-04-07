@@ -1,9 +1,6 @@
 .header {
-  background: rgba(200, 176, 141, 0.92);
+  background: rgba(40, 36, 32, 0.35);
   border-bottom: 1px solid rgba(58, 52, 46, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
   backdrop-filter: blur(10px);
 }
 
@@ -26,7 +23,7 @@
 .logo {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #8a6d4d;
+  color: #5f6368;
   text-decoration: none;
   letter-spacing: -0.02em;
 }
@@ -44,7 +41,7 @@
 
 .nav a {
   text-decoration: none;
-  color: #5c554d;
+  color: #5f6368;
   font-size: 0.95rem;
   transition: color 0.2s;
 }
@@ -79,12 +76,12 @@
 }
 
 .btn-logout:hover {
-  border-color: #b8956c;
+  border-color: #5f6368;
   color: #8a6d4d;
 }
 
 .btn-nav-login {
-  background: #c4a574;
+  background: #5f6368;
   color: #fff !important;
   border-radius: 8px;
   padding: 6px 16px;
