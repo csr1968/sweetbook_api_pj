@@ -43,7 +43,7 @@
 .form-group textarea:focus,
 .form-group input:focus-visible,
 .form-group textarea:focus-visible {
-  border-color: #5f6368;
+  border-color: #90959b;
   outline: none;
 }
 

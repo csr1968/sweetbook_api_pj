@@ -41,14 +41,14 @@
 
 .nav a {
   text-decoration: none;
-  color: #5f6368;
+  color: #4a4e51;
   font-size: 0.95rem;
   transition: color 0.2s;
 }
 
 .nav a:hover,
 .nav a.active {
-  color: #8a6d4d;
+  color: #4a4e51;
   font-weight: 600;
 }
 
@@ -77,7 +77,7 @@
 
 .btn-logout:hover {
   border-color: #5f6368;
-  color: #8a6d4d;
+  color: #4a4e51;
 }
 
 .btn-nav-login {

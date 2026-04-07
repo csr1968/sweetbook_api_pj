@@ -62,7 +62,7 @@
 }
 
 .form-group input:focus {
-  border-color: #f5c800;
+  border-color: #90959b;
 }
 
 .form-group input:disabled {
@@ -91,7 +91,7 @@
 
 .btn-save {
   padding: 12px;
-  background: #d4ab80;
+  background: #7b7f84;
   color: #222;
   border: none;
   border-radius: 8px;
@@ -103,7 +103,7 @@
 }
 
 .btn-save:hover {
-  background: #e6b800;
+  background: #90959b;
 }
 
 .btn-save:disabled {
